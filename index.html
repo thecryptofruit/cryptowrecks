@@ -2,81 +2,157 @@
 <html>
 <head>
 	<title>Crypto Wrecks</title>
-	<script src="js/moment.min.js"></script>
-	<script src="js/Chart.js"></script>
-	<!-- <script src="../../utils.js"></script> -->
-	<style>
+	<script src="js/apexcharts.min.js"></script>
+<!-- 	<style>
 		canvas {
 			-moz-user-select: none;
 			-webkit-user-select: none;
 			-ms-user-select: none;
 		}
-	</style>
+	</style> -->
 </head>
 
 <body>
-	<div style="width:75%;">
+<!-- 	<div style="width:75%;">
 		<canvas id="myChart"></canvas>
+	</div> -->
+	<div id="chart" style="width:75%;">
+		
 	</div>
 
-	<script>
-		var timeFormat = 'DD/MM/YYYY';
-
-		function newDateString(days) {
-			return moment().add(days, 'd').format(timeFormat);
+<!-- 	<script>
+		var options = {
+		  chart: {
+		    type: 'bar'
+		  },
+		  series: [{
+		    name: 'sales',
+		    data: [30,40,45,50,49,60,70,91,125]
+		  }],
+		  xaxis: {
+		    categories: [2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020]
+		  }
 		}
 
-		var ctx = document.getElementById('myChart');
-		var myChart = new Chart(ctx, {
-		    type: 'bar',
-		    data: {
-		        labels: [
-					newDateString(0),
-					newDateString(1),
-					newDateString(2),
-					newDateString(3),
-					newDateString(4)
-	        	],
-		        datasets: [{
-		            label: 'Train wrecks in the blockchain world',
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)'
-		                // ,
-		                // 'rgba(54, 162, 235, 0.2)',
-		                // 'rgba(255, 206, 86, 0.2)',
-		                // 'rgba(75, 192, 192, 0.2)'
-		            ],
-		            // borderColor: [
-		            //     'rgba(255, 99, 132, 1)',
-		            //     'rgba(54, 162, 235, 1)',
-		            //     'rgba(255, 206, 86, 1)',
-		            //     'rgba(75, 192, 192, 1)'
-		            // ],
-		            borderWidth: 1
-		        }]
-		    },
-		    options: {
-				// title: {
-				// 	text: 'Train wrecks in the blockchain world!!!'
-				// },		    	
-		        scales: {
-					xAxes: [{
-						type: 'time',
-						display: true,
-						time: {
-							format: timeFormat,
-							// round: 'day'
-						}
-					}],		        	
-		            yAxes: [{
-		                ticks: {
-		                    beginAtZero: true
-		                }
-		            }]
-		        }
-		    }
-		});
-	</script>	
+		var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+		chart.render();
+	</script>	 -->
+
+	<script>
+		var options = {
+          series: [{
+	          name: 'attack_offchain',
+	          data: [
+              {
+                x: new Date('2011-06-19').getTime(),
+                y: 1,
+                z: 8750,
+                typeEventDesc: "security breach: auditor's credentials stolen by a hacker"
+              },
+              {
+                x: new Date('2013-05-10').getTime(),
+                y: 2,
+                z: 3234
+              }          
+            ]
+	        },
+	        {
+	        name: 'scam',
+	          data: [
+              {
+                x: new Date('2014-02-07').getTime(),
+                y: 1,
+                z: 50000
+              },
+              {
+                x: new Date('2015-09-17').getTime(),
+                y: 3,
+                z: 4321
+              }          
+            ]
+	        },
+
+			],
+         chart: {
+          height: 650,
+          type: 'bubble',
+          zoom: {
+            type: 'xy'
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        fill: {
+        	opacity: 0.8
+        },
+        grid: {
+          xaxis: {
+            lines: {
+              show: true
+            }
+          },
+          yaxis: {
+            lines: {
+              show: true
+            }
+          },
+        },
+        // markers: {
+        // 	size: 14
+        // },
+        plotOptions: {
+        	bubble: {
+        		minBubbleRadius: 10,
+        		maxBubbleRadius: 99
+        	}
+        },
+        tooltip: {
+        	x: {
+        		format: 'yyyy-MM-dd'
+        	},
+        	custom: function({series, seriesIndex, dataPointIndex, w}) {
+		    	const descr = w.config.series[seriesIndex].data[dataPointIndex].typeEventDesc
+
+		    	const v = series[seriesIndex][dataPointIndex]
+		    	return '<div class="arrow_box">' + 
+			    		'<span>' + 
+			    			'Value (USD): ' + v + '<br/>Description: ' + descr
+			    		'</span>' +
+		    		'</div>'
+		    }        	
+        },
+        xaxis: {
+          type: 'datetime',
+	      labels: {
+		    format: 'yyyy-MM-dd',
+		  },
+		  min: new Date('2009-01-01').getTime(),
+		  max: new Date('2020-12-31').getTime()
+        },
+        yaxis: {
+          // max: 70
+			labels: {
+				formatter: function (value) {
+					var chainName;
+
+					switch(value) {
+						case 1: chainName = 'Bitcoin'; break;
+						case 2: chainName = 'Ethereum'; break;
+						default: chainName = 'unknown'
+					}
+
+					return chainName;
+				}
+			}          
+        }
+        
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+      		
+	</script>
 </body>
 </html>
