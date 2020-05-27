@@ -48,12 +48,21 @@
                 x: new Date('2011-06-19').getTime(),
                 y: 1,
                 z: 8750,
-                typeEventDesc: "security breach: auditor's credentials stolen by a hacker"
+                title: "Mt.Gox first hack",
+                typeEventDesc: "security breach: auditor's credentials stolen by a hacker",
+                status: "in progress",
+                link_media: "",
+                link_archive: ""
               },
               {
-                x: new Date('2013-05-10').getTime(),
-                y: 2,
-                z: 3234
+                x: new Date('2018-06-19').getTime(),
+                y: 4,
+                z: 30000,
+                title: "Bithumb hacked during moving assets into a cold wallet",
+                typeEventDesc: "security breach in the exchange's hot wallet, including multiple cryptocurrencies",
+                status: "resolved",
+                link_media: "https://cointelegraph.com/news/from-coincheck-to-bithumb-2018-s-largest-security-breaches-so-far",
+                link_archive: ""
               }          
             ]
 	        },
@@ -63,7 +72,7 @@
               {
                 x: new Date('2014-02-07').getTime(),
                 y: 1,
-                z: 50000
+                z: 5000
               },
               {
                 x: new Date('2015-09-17').getTime(),
@@ -113,12 +122,24 @@
         		format: 'yyyy-MM-dd'
         	},
         	custom: function({series, seriesIndex, dataPointIndex, w}) {
+		    	const title = w.config.series[seriesIndex].data[dataPointIndex].title
 		    	const descr = w.config.series[seriesIndex].data[dataPointIndex].typeEventDesc
+		    	const status = w.config.series[seriesIndex].data[dataPointIndex].status
+				const link_media = w.config.series[seriesIndex].data[dataPointIndex].link_media
+				const link_archive = w.config.series[seriesIndex].data[dataPointIndex].link_archive
 
-		    	const v = series[seriesIndex][dataPointIndex]
+		    	const v = w.config.series[seriesIndex].data[dataPointIndex].z//series[seriesIndex][dataPointIndex]
+		    	const dat = new Date(w.config.series[seriesIndex].data[dataPointIndex].x).toISOString().split('T')[0]
+
 		    	return '<div class="arrow_box">' + 
 			    		'<span>' + 
-			    			'Value (USD): ' + v + '<br/>Description: ' + descr
+			    			'<STRONG>' + title + '</STRONG>' +
+			    			' - ' + dat +
+			    			'<BR/>Value (USD): ' + v + 
+			    			'<BR/>Description: ' + descr +
+			    			'<BR/>Status: ' + status +
+			    			'<BR/>Link from news media: ' + link_media +
+			    			'<BR/>Link to archive.org: ' + link_archive
 			    		'</span>' +
 		    		'</div>'
 		    }        	
@@ -140,7 +161,9 @@
 					switch(value) {
 						case 1: chainName = 'Bitcoin'; break;
 						case 2: chainName = 'Ethereum'; break;
-						default: chainName = 'unknown'
+						case 3: chainName = 'EOS'; break;
+						case 4: chainName = 'multiple'; break;
+						default: chainName = 'unknown';
 					}
 
 					return chainName;
