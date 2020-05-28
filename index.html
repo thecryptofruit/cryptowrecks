@@ -16,7 +16,7 @@
 <!-- 	<div style="width:75%;">
 		<canvas id="myChart"></canvas>
 	</div> -->
-	<div id="chart" style="width:75%;">
+	<div id="chart" style="width:100%; margin:0 auto;">
 		
 	</div>
 
@@ -46,9 +46,10 @@
 	          data: [
               {
                 x: new Date('2011-06-19').getTime(),
-                y: 1,
+                y: 2,
                 z: 8750,
                 title: "Mt.Gox first hack",
+                project: "Mt.Gox",
                 typeEventDesc: "security breach: auditor's credentials stolen by a hacker",
                 status: "in progress",
                 link_media: "",
@@ -56,14 +57,39 @@
               },
               {
                 x: new Date('2018-06-19').getTime(),
-                y: 4,
+                y: 1,
                 z: 30000,
                 title: "Bithumb hacked during moving assets into a cold wallet",
+                project: "Bithumb",
                 typeEventDesc: "security breach in the exchange's hot wallet, including multiple cryptocurrencies",
                 status: "resolved",
                 link_media: "https://cointelegraph.com/news/from-coincheck-to-bithumb-2018-s-largest-security-breaches-so-far",
                 link_archive: ""
-              }          
+              },
+              {
+                x: new Date('2018-06-10').getTime(),
+                y: 1,
+                z: 37200,
+                title: "Coinrail hacked out of 30% funds",
+                project: "Coinrail",
+                location: "South Korea",
+                typeEventDesc: "security breach in the exchange's hot wallet, lost around 30% of all funds, including multiple cryptocurrencies, but mostly NPXS, ATX, NPER",
+                status: "unresolved",
+                link_media: "https://www.coindesk.com/coinrail-exchange-hacked-loses-possibly-40-million-in-cryptos",
+                link_archive: "unresolved"
+              },
+              {
+                x: new Date('2017-07-01').getTime(),
+                y: 5,
+                z: 195000,
+                title: "BitGrail: a small exchange that lost big, owner's drama",
+                project: "BitGrail",
+                location: "Italy",
+                typeEventDesc: "2.5m cryptocurrency Nano (ex RaiBlocks, XRB) were stolen in July (exact date unknown). Three months later, in October, 7.5m Nano was stolen. In December, funds from the hot wallet were moved to the cold wallet, while in February 2018, days before publicly announcing the theft, the owner moved 230 BTC to his personal account. The founder Francesco Firano blamed Nano developers and demanded reversing the transactions, while the developers denied the issue was in the protocol, rather in BitGrail's software. The Italian Bankruptcy Court found the vulnerability was with BitGrail and sentenced the owner and the exchange company to repay lost funds to the maximum available extent. Both also declared bankruptcy.",
+                status: "resolved",
+                link_media: "https://www.coindesk.com/coinrail-exchange-hacked-loses-possibly-40-million-in-cryptos",
+                link_archive: "https://medium.com/nanocurrency/official-statement-regrading-bitgrail-insolvency-ed4422bf274b"
+              }        
             ]
 	        },
 	        {
@@ -72,13 +98,8 @@
               {
                 x: new Date('2014-02-07').getTime(),
                 y: 1,
-                z: 5000
-              },
-              {
-                x: new Date('2015-09-17').getTime(),
-                y: 3,
-                z: 4321
-              }          
+                z: 50000
+              }         
             ]
 	        },
 
@@ -113,8 +134,8 @@
         // },
         plotOptions: {
         	bubble: {
-        		minBubbleRadius: 10,
-        		maxBubbleRadius: 99
+        		minBubbleRadius: 8,
+        		maxBubbleRadius: 100
         	}
         },
         tooltip: {
@@ -131,15 +152,16 @@
 		    	const v = w.config.series[seriesIndex].data[dataPointIndex].z//series[seriesIndex][dataPointIndex]
 		    	const dat = new Date(w.config.series[seriesIndex].data[dataPointIndex].x).toISOString().split('T')[0]
 
-		    	return '<div class="arrow_box">' + 
+		    	return '<div class="arrow_box" style="white-space: normal;">' + 
 			    		'<span>' + 
 			    			'<STRONG>' + title + '</STRONG>' +
 			    			' - ' + dat +
 			    			'<BR/>Value (USD): ' + v + 
 			    			'<BR/>Description: ' + descr +
-			    			'<BR/>Status: ' + status +
-			    			'<BR/>Link from news media: ' + link_media +
-			    			'<BR/>Link to archive.org: ' + link_archive
+			    			'<BR/>Status: ' + status 
+			    			// +
+			    			// '<BR/>Link from news media: ' + link_media +
+			    			// '<BR/>Link to archive.org: ' + link_archive
 			    		'</span>' +
 		    		'</div>'
 		    }        	
@@ -149,20 +171,22 @@
 	      labels: {
 		    format: 'yyyy-MM-dd',
 		  },
-		  min: new Date('2009-01-01').getTime(),
+		  min: new Date('2010-01-01').getTime(),
 		  max: new Date('2020-12-31').getTime()
         },
         yaxis: {
-          // max: 70
-			labels: {
+            //max: 10,
+            labels: {
+				minWidth: 50,
 				formatter: function (value) {
 					var chainName;
 
 					switch(value) {
-						case 1: chainName = 'Bitcoin'; break;
-						case 2: chainName = 'Ethereum'; break;
-						case 3: chainName = 'EOS'; break;
-						case 4: chainName = 'multiple'; break;
+						case 1: chainName = 'multiple'; break;
+						case 2: chainName = 'Bitcoin'; break;
+						case 3: chainName = 'Ethereum'; break;
+						case 4: chainName = 'EOS'; break;
+						case 5: chainName = 'Nano'; break;
 						default: chainName = 'unknown';
 					}
 
