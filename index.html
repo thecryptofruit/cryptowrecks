@@ -3,6 +3,7 @@
 <head>
 	<title>Crypto Wrecks</title>
 	<script src="js/apexcharts.min.js"></script>
+	<script src="js/axios.min.js"></script>
 <!-- 	<style>
 		canvas {
 			-moz-user-select: none;
@@ -41,85 +42,86 @@
 
 	<script>
 		var options = {
-          series: [{
-	          name: 'attack_offchain',
-	          data: [
-              {
-                x: new Date('2011-06-19').getTime(),
-                y: 2,
-                z: 8750,
-                title: "Mt.Gox first hack",
-                project: "Mt.Gox",
-                location: "Japan",
-                typeEventDesc: "security breach: auditor's credentials stolen by a hacker",
-                status: "in progress",
-                link_media: "",
-                link_archive: ""
-              },
-              {
-                x: new Date('2011-10-05').getTime(),
-                y: 2,
-                z: 25,
-                title: "Bitcoin7 exchange system breached",
-                project: "Bitcoin7",
-                location: "Bulgaria",
-                typeEventDesc: "The exchange's server and other systems on that network were compromised. A total of 5000 BTC were stolen, along with user database. Users were asked to send detailed personal information to the exchange in order to claim repayment of lost funds - an indication of the troublesome beginnings in the industry. There are indications pointing to an exit scam.",
-                status: "unresolved",
-                link_media: "https://siliconangle.com/2011/10/07/bitcoin7-hacked-funds-recovery-requires-sensitive-personal-information/",
-                link_archive: "",
-                link_community: "https://bitcointalk.org/index.php?topic=46982.0"
-              },     
-              {
-                x: new Date('2012-09-05').getTime(),
-                y: 2,
-                z: 250,
-                title: "BitFloor's unencrypted backup compromised",
-                project: "BitFloor",
-                location: "USA",
-                typeEventDesc: "24000 BTC stolen when the hacker got access to an unencrypted backup of the exchange's hot wallet. The owner, Roman Shtylman, communicated about the event publicly. The exchange was a registered Money Service Business with FinCEN. BitFloor lost its bank account on April 17, 2013 and thus cease to operate.",
-                status: "resolved",
-                link_media: "https://bitcoinmagazine.com/articles/bitfloor-hacked-250000-missing-1346821046",
-                link_archive: "",
-                link_community: "https://bitcointalk.org/index.php?topic=105818.0"
-              },                        
-              {
-                x: new Date('2018-06-19').getTime(),
-                y: 1,
-                z: 30000,
-                title: "Bithumb hacked during moving assets into a cold wallet",
-                project: "Bithumb",
-                location: "",
-                typeEventDesc: "security breach in the exchange's hot wallet, including multiple cryptocurrencies",
-                status: "resolved",
-                link_media: "https://cointelegraph.com/news/from-coincheck-to-bithumb-2018-s-largest-security-breaches-so-far",
-                link_archive: ""
-              },
-              {
-                x: new Date('2018-06-10').getTime(),
-                y: 1,
-                z: 37200,
-                title: "Coinrail hacked out of 30% funds",
-                project: "Coinrail",
-                location: "South Korea",
-                typeEventDesc: "security breach in the exchange's hot wallet, lost around 30% of all funds, including multiple cryptocurrencies, but mostly NPXS, ATX, NPER",
-                status: "unresolved",
-                link_media: "https://www.coindesk.com/coinrail-exchange-hacked-loses-possibly-40-million-in-cryptos",
-                link_archive: "unresolved"
-              },
-              {
-                x: new Date('2017-07-01').getTime(),
-                y: 5,
-                z: 195000,
-                title: "BitGrail: a small exchange that lost big, owner's drama",
-                project: "BitGrail",
-                location: "Italy",
-                typeEventDesc: "2.5m cryptocurrency Nano (ex RaiBlocks, XRB) were stolen in July (exact date unknown). Three months later, in October, 7.5m Nano was stolen. In December, funds from the hot wallet were moved to the cold wallet, while in February 2018, days before publicly announcing the theft, the owner moved 230 BTC to his personal account. The founder Francesco Firano blamed Nano developers and demanded reversing the transactions, while the developers denied the issue was in the protocol, rather in BitGrail's software. The Italian Bankruptcy Court found the vulnerability was with BitGrail and sentenced the owner and the exchange company to repay lost funds to the maximum available extent. Both also declared bankruptcy.",
-                status: "resolved",
-                link_media: "https://www.coindesk.com/coinrail-exchange-hacked-loses-possibly-40-million-in-cryptos",
-                link_archive: "https://medium.com/nanocurrency/official-statement-regrading-bitgrail-insolvency-ed4422bf274b"
-              }        
-            ]
-	        },
+          series: [
+         //  {
+	        //   name: 'attack_offchain',
+	        //   data: [
+         //      {
+         //        x: new Date('2011-06-19').getTime(),
+         //        y: 2,
+         //        z: 8750,
+         //        title: "Mt.Gox first hack",
+         //        project: "Mt.Gox",
+         //        location: "Japan",
+         //        typeEventDesc: "security breach: auditor's credentials stolen by a hacker",
+         //        status: "in progress",
+         //        link_media: "",
+         //        link_archive: ""
+         //      },
+         //      {
+         //        x: new Date('2011-10-05').getTime(),
+         //        y: 2,
+         //        z: 25,
+         //        title: "Bitcoin7 exchange system breached",
+         //        project: "Bitcoin7",
+         //        location: "Bulgaria",
+         //        typeEventDesc: "The exchange's server and other systems on that network were compromised. A total of 5000 BTC were stolen, along with user database. Users were asked to send detailed personal information to the exchange in order to claim repayment of lost funds - an indication of the troublesome beginnings in the industry. There are indications pointing to an exit scam.",
+         //        status: "unresolved",
+         //        link_media: "https://siliconangle.com/2011/10/07/bitcoin7-hacked-funds-recovery-requires-sensitive-personal-information/",
+         //        link_archive: "",
+         //        link_community: "https://bitcointalk.org/index.php?topic=46982.0"
+         //      },     
+         //      {
+         //        x: new Date('2012-09-05').getTime(),
+         //        y: 2,
+         //        z: 250,
+         //        title: "BitFloor's unencrypted backup compromised",
+         //        project: "BitFloor",
+         //        location: "USA",
+         //        typeEventDesc: "24000 BTC stolen when the hacker got access to an unencrypted backup of the exchange's hot wallet. The owner, Roman Shtylman, communicated about the event publicly. The exchange was a registered Money Service Business with FinCEN. BitFloor lost its bank account on April 17, 2013 and thus cease to operate.",
+         //        status: "resolved",
+         //        link_media: "https://bitcoinmagazine.com/articles/bitfloor-hacked-250000-missing-1346821046",
+         //        link_archive: "",
+         //        link_community: "https://bitcointalk.org/index.php?topic=105818.0"
+         //      },                        
+         //      {
+         //        x: new Date('2018-06-19').getTime(),
+         //        y: 1,
+         //        z: 30000,
+         //        title: "Bithumb hacked during moving assets into a cold wallet",
+         //        project: "Bithumb",
+         //        location: "",
+         //        typeEventDesc: "security breach in the exchange's hot wallet, including multiple cryptocurrencies",
+         //        status: "resolved",
+         //        link_media: "https://cointelegraph.com/news/from-coincheck-to-bithumb-2018-s-largest-security-breaches-so-far",
+         //        link_archive: ""
+         //      },
+         //      {
+         //        x: new Date('2018-06-10').getTime(),
+         //        y: 1,
+         //        z: 37200,
+         //        title: "Coinrail hacked out of 30% funds",
+         //        project: "Coinrail",
+         //        location: "South Korea",
+         //        typeEventDesc: "security breach in the exchange's hot wallet, lost around 30% of all funds, including multiple cryptocurrencies, but mostly NPXS, ATX, NPER",
+         //        status: "unresolved",
+         //        link_media: "https://www.coindesk.com/coinrail-exchange-hacked-loses-possibly-40-million-in-cryptos",
+         //        link_archive: "unresolved"
+         //      },
+         //      {
+         //        x: new Date('2017-07-01').getTime(),
+         //        y: 5,
+         //        z: 195000,
+         //        title: "BitGrail: a small exchange that lost big, owner's drama",
+         //        project: "BitGrail",
+         //        location: "Italy",
+         //        typeEventDesc: "2.5m cryptocurrency Nano (ex RaiBlocks, XRB) were stolen in July (exact date unknown). Three months later, in October, 7.5m Nano was stolen. In December, funds from the hot wallet were moved to the cold wallet, while in February 2018, days before publicly announcing the theft, the owner moved 230 BTC to his personal account. The founder Francesco Firano blamed Nano developers and demanded reversing the transactions, while the developers denied the issue was in the protocol, rather in BitGrail's software. The Italian Bankruptcy Court found the vulnerability was with BitGrail and sentenced the owner and the exchange company to repay lost funds to the maximum available extent. Both also declared bankruptcy.",
+         //        status: "resolved",
+         //        link_media: "https://www.coindesk.com/coinrail-exchange-hacked-loses-possibly-40-million-in-cryptos",
+         //        link_archive: "https://medium.com/nanocurrency/official-statement-regrading-bitgrail-insolvency-ed4422bf274b"
+         //      }        
+         //    ]
+	        // },
 	        {
 	        name: 'scam',
 	          data: [
@@ -227,6 +229,14 @@
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
+
+axios.get('https://github.com/thecryptofruit/cryptowrecks/data.json')
+  .then((response) => {
+        chart.updateSeries([{
+          name: 'attack_offchain',
+          data: response.data
+        }])
+      });
       		
 	</script>
 </body>
