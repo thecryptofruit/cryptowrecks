@@ -230,7 +230,7 @@
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
 
-axios.get('https://github.com/thecryptofruit/cryptowrecks/data.json')
+axios.get('https://thecryptofruit.github.io/cryptowrecks/data.json')
   .then((response) => {
         chart.updateSeries([{
           name: 'attack_offchain',
